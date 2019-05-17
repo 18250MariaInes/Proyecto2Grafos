@@ -1,0 +1,2 @@
+Enlace donde se consiguio la data para la base de datos:
+http://www.jgmendez.net/cine/00.Listado-peliculas.xls
