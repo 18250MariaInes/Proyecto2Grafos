@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:util="http://www.springframework.org/schema/util"  
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+ 
+    <context:annotation-config/>
+    
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+        <list>           
+           <value>classpath*:/application.properties</value>           
+        </list>
+    </property>
+    </bean>
+        
+        
+    <bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="${driverURL}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<property name="initialSize" value="1"/>
+		<property name="maxActive"  value="5"/>
+		<property name="maxIdle" value="2"/>		
+    </bean>		
+
+    <bean id="DaoMapper" class="com.uvg.neo4j.dao.DaoMapper" scope="singleton">
+        <property name="datasource" ref="datasource"/>
+    </bean>
+    
+    <bean id="MovieDao" class="com.uvg.neo4j.dao.MovieDao" scope="singleton">
+        <property name="daoMapper" ref="DaoMapper"/>
+    </bean>
+    
+    <bean id="ActorDao" class="com.uvg.neo4j.dao.ActorDao" scope="singleton">
+        <property name="daoMapper" ref="DaoMapper"/>
+    </bean>            
+    
+    <bean id="FavoriteMoviesBean" class="com.uvg.neo4j.dao.FavoriteMoviesBean" scope="singleton">
+        <property name="favoriteMoviesFile" value="${favoriteMoviesFile}"/>
+    </bean>
+        
+	
+</beans>
