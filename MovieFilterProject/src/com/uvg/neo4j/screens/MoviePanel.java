@@ -23,7 +23,7 @@ import org.springframework.context.ApplicationContext;
 
 /**
  *
- * @author cesar.asada
+ * @author mariaines.camila.abril
  */
 public class MoviePanel extends javax.swing.JPanel {
 
@@ -58,6 +58,7 @@ public class MoviePanel extends javax.swing.JPanel {
     
     /**
      * Creates new form MoviePanel
+     * @param ctx
      */
     public MoviePanel( ApplicationContext ctx) {
         initComponents();
@@ -69,6 +70,9 @@ public class MoviePanel extends javax.swing.JPanel {
         daoPeli = this.ctx.getBean("MovieDao", MovieDao.class);
     }
     
+    /**
+     *
+     */
     public void queryMovies() {
         try{        
             
@@ -124,6 +128,7 @@ public class MoviePanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeliculas = new javax.swing.JTable();
         cmdCargarFavoritos = new javax.swing.JButton();
+        cmdVerFavoritos = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JTextField();
         cmdPeliculaNueva = new javax.swing.JButton();
@@ -250,7 +255,20 @@ public class MoviePanel extends javax.swing.JPanel {
                 cmdCargarFavoritosMouseClicked(evt);
             }
         });
+        cmdCargarFavoritos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCargarFavoritosActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdCargarFavoritos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
+        cmdVerFavoritos.setText("ver favoritos");
+        cmdVerFavoritos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmdVerFavoritosMouseClicked(evt);
+            }
+        });
+        jPanel1.add(cmdVerFavoritos, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, -1, -1));
 
         jTabbedPane1.addTab("busqueda", jPanel1);
 
@@ -470,15 +488,12 @@ public class MoviePanel extends javax.swing.JPanel {
                 this.peliculaSeleccionada.setGenre(this.generoSeleccionado);
                 this.peliculaSeleccionada.setTitle(this.txtTitulo.getText());
                 this.peliculaSeleccionada.setTagline(this.txtTagline.getText());
-                this.peliculaSeleccionada.setReleased(this.txtAnio.getText());
-                
                 daoPeli.agregar(peliculaSeleccionada);                
                 this.lblPeliculaId.setText(peliculaSeleccionada.getId());
             } else {   //actualizar
                 this.peliculaSeleccionada.setGenre(this.generoSeleccionado);
                 this.peliculaSeleccionada.setTitle(this.txtTitulo.getText());
-                this.peliculaSeleccionada.setTagline(this.txtTagline.getText());   
-                this.peliculaSeleccionada.setReleased(this.txtAnio.getText());
+                this.peliculaSeleccionada.setTagline(this.txtTagline.getText());                
                 daoPeli.actualizar(peliculaSeleccionada);
             }
             
@@ -576,6 +591,20 @@ public class MoviePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmdAceptarActionPerformed
 
+    private void cmdCargarFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCargarFavoritosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdCargarFavoritosActionPerformed
+
+    private void cmdVerFavoritosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdVerFavoritosMouseClicked
+        // TODO add your handling code here:
+        try{
+            Utilities.loadDialog(parent, "Pelis favoritas", new MyMovieListPanel(ctx));                
+        }catch(Exception ex){
+            log.error("error", ex);
+            Utilities.showErrorMessage(parent, ex.getMessage());            
+        }
+    }//GEN-LAST:event_cmdVerFavoritosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdAceptar;
@@ -588,6 +617,7 @@ public class MoviePanel extends javax.swing.JPanel {
     private javax.swing.JButton cmdLimpiar;
     private javax.swing.JButton cmdPeliculaNueva;
     private javax.swing.JButton cmdSeleccionarActor;
+    private javax.swing.JButton cmdVerFavoritos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

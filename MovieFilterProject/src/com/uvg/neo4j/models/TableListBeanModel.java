@@ -13,14 +13,20 @@ import javax.swing.table.TableModel;
 import org.apache.commons.beanutils.PropertyUtils;
 
 /**
- *
- * @author cesar
+ *llenar las tablas (tablemodel interfaz de swing) en base a los objetos que mandemos
+ * @author mariaies.camila.abril
+ * @param <T>
  */
 public class  TableListBeanModel<T> implements TableModel{
     
-    private List<String> columns = null;
-    private List<T> listObject = null;
+    private List<String> columns = null; //encabezados de columnas
+    private List<T> listObject = null; //listado de objetos a mostrar
     
+    /**
+     *
+     * @param listObject
+     * @param cls
+     */
     public TableListBeanModel(List<T> listObject, Class<T> cls){
         this.listObject = listObject;
         Field[] fields= cls.getDeclaredFields();
@@ -66,6 +72,11 @@ public class  TableListBeanModel<T> implements TableModel{
         }
     }
     
+    /**
+     *
+     * @param rowid
+     * @return
+     */
     public T getObjectAt(int rowid){
         return this.listObject.get(rowid);
     }

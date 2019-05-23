@@ -14,7 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
- * @author cesar
+ * @author mariaines.camila.abril
  */
 public class TestQueryClass {
     

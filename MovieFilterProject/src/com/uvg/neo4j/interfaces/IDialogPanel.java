@@ -8,8 +8,8 @@ package com.uvg.neo4j.interfaces;
 import javax.swing.JDialog;
 
 /**
- *
- * @author cesar
+ *interfaz que deben implementar todos los paneles
+ * @author mariaines.camila.abril
  */
 public interface IDialogPanel {
  

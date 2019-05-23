@@ -15,19 +15,24 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 
 /**
- *
- * @author cesar
+ *pantalla para realizar busqueda de actores
+ * @author mariaines.abril.camila
+ * @param <T>
  */
 public class SearchPanel<T> extends javax.swing.JPanel implements IDialogPanel {
 
     private Log log =LogFactory.getLog(SearchPanel.class);
     private ApplicationContext ctx = null;
-    private T seleccionado = null;
+    private T seleccionado = null; //actor seleccionado
     private TableListBeanModel<T> tableModel = null;
-    private JDialog parent = null;
+    private JDialog parent = null; //contenedor del panel, jdialog
+    
             
     /**
      * Creates new form SearchPanel
+     * @param ctx aplication context y acceso de applicaccion
+     * @param cls clase que va recibir la busqeda, en este caso el actor
+     * @param query query que llena la tabla de actores
      */
     public SearchPanel(ApplicationContext ctx, String query, Class<T> cls) {
         initComponents();
@@ -76,7 +81,7 @@ public class SearchPanel<T> extends javax.swing.JPanel implements IDialogPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 540, 340));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 540, 340));
 
         cmdSeleccionar.setText("seleccionar");
         cmdSeleccionar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,12 +117,17 @@ public class SearchPanel<T> extends javax.swing.JPanel implements IDialogPanel {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * @return the seleccionado
+     * 
+     * @return the seleccionado actor seleccionado
      */
     public T getSeleccionado() {
         return seleccionado;
     }
 
+    /**
+     *
+     * @param frame
+     */
     @Override
     public void setParent(JDialog frame) {
         this.parent = frame;

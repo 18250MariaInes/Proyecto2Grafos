@@ -8,6 +8,8 @@ package com.uvg.neo4j.screens;
 import com.uvg.neo4j.beans.Actor;
 import com.uvg.neo4j.models.SearchPanel;
 import com.uvg.neo4j.utils.Utilities;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.apache.commons.logging.Log;
@@ -17,14 +19,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
- * @author cesar
+ * @author mariaines.camila.abril
  */
 public class MainScreen extends javax.swing.JFrame {
 
     private Log log = LogFactory.getLog(MainScreen.class);
-    private ApplicationContext ctx = null;
+    private ClassPathXmlApplicationContext ctx = null;
     /**
      * Creates new form MainScreen
+     * inicializa application context 
      */
     public MainScreen() {
         try {
@@ -51,23 +54,16 @@ public class MainScreen extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/uvg/neo4j/screens/logodatos.jpg"))); // NOI18N
-        jLabel1.setText("Proyecto 2: Neo4j y motores de recomendación");
+        jLabel1.setText("jLabel1");
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(-40, -10, 580, 430);
+        jLabel1.setBounds(0, 0, 640, 410);
 
         fileMenu.setMnemonic('f');
-        fileMenu.setText("Inicio");
-        fileMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                fileMenuMouseClicked(evt);
-            }
-        });
+        fileMenu.setText("inicio");
 
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("GET BETTER NOW");
@@ -80,32 +76,13 @@ public class MainScreen extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Ayuda");
-
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        aboutMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                aboutMenuItemMouseClicked(evt);
-            }
-        });
-        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aboutMenuItemActionPerformed(evt);
-            }
-        });
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
-
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,18 +96,6 @@ public class MainScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         Utilities.loadDialog(this, "filtro por pelicula", new MoviePanel(ctx));
     }//GEN-LAST:event_openMenuItemActionPerformed
-
-    private void aboutMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMenuItemMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutMenuItemMouseClicked
-
-    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutMenuItemActionPerformed
-
-    private void fileMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fileMenuMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fileMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -162,16 +127,26 @@ public class MainScreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainScreen().setVisible(true);
+                MainScreen mainScreen = new MainScreen();
+                final ClassPathXmlApplicationContext ctx = mainScreen.ctx;
+                mainScreen.addWindowListener(new WindowAdapter() {
+                  @Override
+                  public void windowClosing(WindowEvent e)
+                  {
+                      System.out.println("Closed");
+                      ctx.close();
+                      e.getWindow().dispose();
+                  }
+                });
+                mainScreen.setVisible(true);
+                //new MainScreen().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;

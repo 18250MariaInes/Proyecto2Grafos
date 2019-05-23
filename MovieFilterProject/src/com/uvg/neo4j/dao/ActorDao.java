@@ -15,18 +15,29 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- *
- * @author cesar.asada
+ *clase encargada de realizar acciones relacionadas con el nodo tipo actor
+ * @author mariaines.camila.abril
  */
 public class ActorDao implements ApplicationContextAware{
 
     private DaoMapper daoMapper = null;
     private Log log = LogFactory.getLog(ActorDao.class);
     
+    /**
+     *metodo para agregar actores a la DB
+     * @param parametro recibe que actor que desea insertar
+     * @throws Exception
+     */
     public void agregar(Actor parametro) throws Exception{
         daoMapper.execute("CREATE (d:Person {name:?, born:?})",  parametro.getName(), parametro.getBorn());       
     }
     
+    /**
+     *crear vinculo entre pelicula y actor seleccionadoi 
+     * @param parametro actor que desea vincular
+     * @param pelicula pelicula que desea vincular
+     * @throws Exception
+     */
     public void asociarAPeli(Actor parametro, Movie pelicula) throws Exception{
         //validar si ya existe la asociacion
         List<Actor> vinculo= daoMapper.queryData(Actor.class, "MATCH (d:Person {name:?})-[:ACTED_IN]->(x:Movie {title:?}) RETURN d.name ORDER BY d.name"
@@ -42,11 +53,22 @@ public class ActorDao implements ApplicationContextAware{
         }
     }
     
+    /**
+     *eliminar de una pelicula de la DB 
+     * @param parametro actor que desea desvincular
+     * @param pelicula pelicula que dese desvinculaar
+     * @throws Exception
+     */
     public void eliminarDePeli(Actor parametro, Movie pelicula) throws Exception{
         daoMapper.execute("MATCH (d:Person {name:?})-[r:ACTED_IN]->(x:Movie {title:?}) DELETE r"
                 , parametro.getName(), pelicula.getTitle());
     }
     
+    /**
+     *
+     * @param ac
+     * @throws BeansException
+     */
     @Override
     public void setApplicationContext(ApplicationContext ac) throws BeansException {
         

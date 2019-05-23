@@ -15,7 +15,7 @@ import java.sql.ResultSetMetaData;
 
 /**
  *
- * @author cesar.asada
+ * @author mariaines.camila.abril
  */
 public class TestClass {
     

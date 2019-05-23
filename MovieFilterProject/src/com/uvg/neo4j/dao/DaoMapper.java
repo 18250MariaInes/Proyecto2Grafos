@@ -25,25 +25,42 @@ import org.springframework.context.ApplicationContextAware;
    
 /**
  *
- * @author cesar.asada
+ * @author maria.abril.camila
  */
 public class DaoMapper implements ApplicationContextAware{
 
-    private ApplicationContext ctx = null;
-    private Log log = LogFactory.getLog(DaoMapper.class);
-    private DataSource datasource = null;
     
+    private ApplicationContext ctx = null;
+    //mecanismo de acceso de todos los recursos de la aplicacion. vinculo entre beans y recursos
+    private Log log = LogFactory.getLog(DaoMapper.class);
+    //logs del proyecto
+    private DataSource datasource = null;
+    //application context, punto de entrada a la DB y crea conexiones a DB
+    
+    //
+
+    /**
+     *obtener application context de aplicacion
+     * @param ac application context
+     * @throws BeansException
+     */
     @Override
     public void setApplicationContext(ApplicationContext ac) throws BeansException {
         this.ctx = ac;
     }
     
+    //convierte un resulted a la instancia de un objeto. Crea objeto a partir de objeto
     private <T>T toInstance (Class<T> cls, ResultSet rs) throws Exception{
+        
+        //obtiene metadata de result set y obtener todas las columnad del query 
         ResultSetMetaData rsm = rs.getMetaData();
         int cols= rsm.getColumnCount();
+        
+        //referencia a constructor de los beans que deseamos instanciar 
         Constructor ctor= cls.getConstructor(new Class[]{});
         T obj = (T) ctor.newInstance(new Object[]{});
         
+        //llena la tabla de la informacion obtenida del query. Va llenado el objeto
         for (int c=1; c<=cols; c++){
             String columnName = rsm.getColumnName(c);
             Object columnValue = rs.getObject(columnName);
@@ -63,14 +80,25 @@ public class DaoMapper implements ApplicationContextAware{
         return obj;
     }
             
-    
+
+    /**
+     *realiza la busqueda de informacion por medio de los queries invocados
+     * 
+     * @param <T> generico, que tipo desea que me devuelva
+     * @param cls clase del tipo que desea buscar a instanciar
+     * @param query busqueda a realizar
+     * @param params de la busqyesa
+     * @return la lista de datos 
+     * @throws Exception
+     */
     public <T>List<T> queryData(Class<T> cls, String query, String ... params) throws Exception{
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        //jdbc
+        Connection conn = null;//conexion del datasource
+        PreparedStatement pstmt = null;//ejecutar sql con la base de datos
+        ResultSet rs = null; //leer y devolver resultados (guarda todos los resultados)
         try{
             conn = datasource.getConnection();
-            pstmt = conn.prepareStatement(query);
+            pstmt = conn.prepareStatement(query);//manda un query estructurado con sus place holders
             log.info("EJECUTANDO QUERY:"+ query);            
             
             if (params != null && params.length > 0){                
@@ -92,6 +120,7 @@ public class DaoMapper implements ApplicationContextAware{
             
             return  list;
         }finally{
+            //cerrando recursos
             if (rs != null){
                 rs.close();
             }
@@ -104,6 +133,17 @@ public class DaoMapper implements ApplicationContextAware{
         }
     }
     
+    //retorna solo el primer resultado de la busqueda
+
+    /**
+     *realizar busqueda puntual
+     * @param <T> generico para poder realizar busqueda de cualquier tipo de objeto
+     * @param cls clase del objeto que desea buscar
+     * @param query instruccion de busquda
+     * @param params de la busqueda
+     * @return resultado de busquesa, objeto puntual
+     * @throws Exception
+     */
     public <T>T queryFirst(Class<T> cls, String query, String ... params) throws Exception{
         List<T> l = queryData(cls, query, params);
         if (l != null && l.size() > 0){
@@ -113,6 +153,13 @@ public class DaoMapper implements ApplicationContextAware{
     }
     
     
+
+    /**
+     *realizar insercion y eliminacion como vinculos
+     * @param sql instruccion que se desea realizar, insert, delete y crear vinculos
+     * @param params de la instruccion
+     * @throws Exception
+     */
     public void execute (String sql,  String ... params) throws Exception{
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -143,6 +190,11 @@ public class DaoMapper implements ApplicationContextAware{
         }
     }
          
+    /**
+     *para realizar varias ejecuciones de instrucciones dml
+     * @param sqls lista de instrucciones
+     * @throws Exception
+     */
     public void executeBatch (String[] sqls) throws Exception{
         Connection conn = null;
         Statement stmt = null;
@@ -166,14 +218,14 @@ public class DaoMapper implements ApplicationContextAware{
         }
     }
 
-    /**
+    /**devuelve data spource
      * @return the datasource
      */
     public DataSource getDatasource() {
         return datasource;
     }
 
-    /**
+    /**settea data source
      * @param datasource the datasource to set
      */
     public void setDatasource(DataSource datasource) {

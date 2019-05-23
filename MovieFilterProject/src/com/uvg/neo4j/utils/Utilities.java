@@ -16,12 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 /**
- *
- * @author cesar
+ *sirve para cargar pantallas 
+ * @author mariaines.camila.abril
  */
 public class Utilities {
     
-  public static void loadDialog(JFrame parent, String title, JPanel panel){
+    /**
+     *cargar una pantalla modal desde un frame  
+     * @param parent frame que la que invoca
+     * @param title titulo de la pantalla
+     * @param panel contenido de pantalla
+     */
+    public static void loadDialog(JFrame parent, String title, JPanel panel){
         JDialog dialog = new JDialog(parent, title, true);
         dialog.getContentPane().add(panel);
         if (panel instanceof IDialogPanel){
@@ -34,6 +40,12 @@ public class Utilities {
         
     }
     
+    /**
+     *cargar una pantalla modal desde otro dialog
+     * @param parent dialog que lo invoca
+     * @param title titulo de la pantalla
+     * @param panel contenido de pantalla
+     */
     public static void loadDialog(JDialog parent, String title, JPanel panel){
         JDialog dialog = new JDialog(parent, title, true);
         dialog.getContentPane().add(panel);
@@ -47,10 +59,23 @@ public class Utilities {
         
     }
     
+    /**
+     *
+     * @param parent
+     * @param message
+     */
     public static void showErrorMessage(Component parent, String message){
         JOptionPane.showMessageDialog(parent, message, "Error del sistema", JOptionPane.ERROR_MESSAGE);
     }
     
+    /**
+     *llenar tabla
+     * @param <T> generico
+     * @param cls clase de la que desea llenar
+     * @param listObject listado de objetos
+     * @param table tabla que desea llenar
+     * @return modelo de la tabla
+     */
     public static <T>TableListBeanModel<T>  fillTable (Class<T> cls, List<T> listObject, JTable table){
         TableListBeanModel<T> model = new TableListBeanModel<T>(listObject, cls);
         table.setModel(model);

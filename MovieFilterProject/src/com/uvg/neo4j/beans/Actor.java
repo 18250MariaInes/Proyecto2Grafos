@@ -7,7 +7,7 @@ package com.uvg.neo4j.beans;
 
 /**
  *
- * @author cesar
+ * @author mariaines.camila.abril
  */
 public class Actor {
     

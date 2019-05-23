@@ -18,7 +18,7 @@ import org.springframework.context.ApplicationContext;
 
 /**
  *
- * @author cesar
+ * @author mariaines.camila.abril
  */
 public class MyMovieListPanel extends javax.swing.JPanel {
 
@@ -58,7 +58,7 @@ public class MyMovieListPanel extends javax.swing.JPanel {
     }
     
     private void loadList() throws Exception{        
-        listado = bean.getList();
+        listado = bean.getListado();
         DefaultListModel<String> model = new DefaultListModel<String>();
         for (String peli : listado) {
             model.addElement(peli);
@@ -85,10 +85,15 @@ public class MyMovieListPanel extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Lista de películas escogidas");
+        jLabel1.setText("Lista de peliculas escogidas");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         cmdEliminar.setText("eliminar");
+        cmdEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmdEliminarMouseClicked(evt);
+            }
+        });
         add(cmdEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
 
         lstPelisFavoritas.setModel(new javax.swing.AbstractListModel() {
@@ -118,9 +123,9 @@ public class MyMovieListPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblRecomendaciones);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, 230));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 230));
 
-        cmdRecomendaciones.setLabel("Ver Recomendaciones");
+        cmdRecomendaciones.setText("ver recomendaciones");
         cmdRecomendaciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cmdRecomendacionesMouseClicked(evt);
@@ -131,7 +136,7 @@ public class MyMovieListPanel extends javax.swing.JPanel {
                 cmdRecomendacionesActionPerformed(evt);
             }
         });
-        add(cmdRecomendaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        add(cmdRecomendaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void lstPelisFavoritasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPelisFavoritasMouseClicked
@@ -153,6 +158,17 @@ public class MyMovieListPanel extends javax.swing.JPanel {
             Utilities.showErrorMessage(jLabel1, ex.getMessage());
         }
     }//GEN-LAST:event_cmdRecomendacionesMouseClicked
+
+    private void cmdEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdEliminarMouseClicked
+        // TODO add your handling code here:
+        try{
+            bean.removeMovie(selectedMovie);
+            loadList();
+        }catch(Exception ex){
+            log.error("error", ex);
+            Utilities.showErrorMessage(jLabel1, ex.getMessage());            
+        }
+    }//GEN-LAST:event_cmdEliminarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
