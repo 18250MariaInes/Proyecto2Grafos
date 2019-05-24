@@ -71,6 +71,7 @@ def return_actorsofgenre(tx, name):
         cont = cont + 1
         print (str(cont) + ". " + record["x.name"])
 
+#Muestra los generos de peliculas en los que un actor especifico ha participado
 def return_genreofanactor(tx, name):
     print("Genero de la pelicula " + name + "\n")
     cont = 0
