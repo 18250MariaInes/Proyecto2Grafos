@@ -488,6 +488,8 @@ public class MoviePanel extends javax.swing.JPanel {
                 this.peliculaSeleccionada.setGenre(this.generoSeleccionado);
                 this.peliculaSeleccionada.setTitle(this.txtTitulo.getText());
                 this.peliculaSeleccionada.setTagline(this.txtTagline.getText());
+                this.peliculaSeleccionada.setReleased(this.txtAnio.getText());
+                
                 daoPeli.agregar(peliculaSeleccionada);                
                 this.lblPeliculaId.setText(peliculaSeleccionada.getId());
             } else {   //actualizar

@@ -25,7 +25,7 @@ public class MovieDao implements ApplicationContextAware{
      * @throws Exception
      */
     public void agregar(Movie parametro) throws Exception{
-        daoMapper.execute("CREATE (d:Movie {title:? , tagline:?, release:?, genre:?})",  parametro.getTitle(), parametro.getTagline(), parametro.getReleased(), parametro.getGenre());
+        daoMapper.execute("CREATE (d:Movie {title:? , tagline:?, released:?, genre:?})",  parametro.getTitle(), parametro.getTagline(), parametro.getReleased(), parametro.getGenre());
         Movie s = busquedaPuntual(parametro.getTitle());
         parametro.setId(s.getId());
     }
