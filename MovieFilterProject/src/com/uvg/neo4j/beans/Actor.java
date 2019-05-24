@@ -1,9 +1,7 @@
 /*
- * Maria Ines Vásquez Figueroa - 18250
- * Andrea Abril Palencia Gutierrez - 18198
- * Paula Camila Gonzalez Ortega - 18398
- * Estructura de Datos - Seccion 10 - Tercer Semestre
- * Getters y Setters para los actores de las peliculas
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.uvg.neo4j.beans;
 
