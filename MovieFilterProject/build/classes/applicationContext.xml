@@ -41,7 +41,8 @@ http://www.springframework.org/schema/context/spring-context-4.3.xsd">
         <property name="daoMapper" ref="DaoMapper"/>
     </bean>            
     
-    <bean id="FavoriteMoviesBean" class="com.uvg.neo4j.dao.FavoriteMoviesBean" scope="singleton">
+    <bean id="FavoriteMoviesBean" class="com.uvg.neo4j.dao.FavoriteMoviesBean" scope="singleton"
+          init-method="init"  destroy-method="close">
         <property name="favoriteMoviesFile" value="${favoriteMoviesFile}"/>
     </bean>
         
