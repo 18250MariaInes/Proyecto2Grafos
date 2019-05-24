@@ -1,13 +1,15 @@
-# Hoja de trabajo numero 10
+# Ma.Ines - Abril - Camila
 # 17/05/2019
+# Se trabajo en python el proyecto ya que teniamos experiencia en este lenguaje gracias la HDT10
+# Esto sirvio para tomar idea de como tendria que ser en JAVA y asi fuera mas facil trabajar en dicho lenguaje
 
 from neo4j import GraphDatabase
 
-driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "soyUVG17"))
+driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "netsa"))
 
     
     
-#Muestra todos los doctores segun la especialidad ingresada 
+#Muestra todos las peliculas segun el genero ingresado 
 def return_docs (tx, name):
     print("Peliculas de " + name + "\n")
     cont = 0
@@ -15,7 +17,8 @@ def return_docs (tx, name):
             name=name):
         cont = cont + 1
         print (str(cont) + ". " + record["n.title"])
-
+        
+#Muestra todos las peliculas en las que actuo el actor ingresado
 def return_actorsmovies(tx, name):
     print("Peliculas del Actor " + name + "\n")
     cont = 0
@@ -24,6 +27,7 @@ def return_actorsmovies(tx, name):
         cont = cont + 1
         print (str(cont) + ". " + record["n.title"]+ " "+record["n.genre"])
 
+#Muestra todos las peliculas de determinado genero en las que actuo el actor detrminado
 def return_actorsmoviesofgenre(tx, name, genero):
     print("Peliculas del Actor " + name + "\n")
     cont = 0
@@ -40,6 +44,7 @@ def return_moviefromanothergenreandactors(tx, title, genero):
         cont = cont + 1
         print (str(cont) + ". " + record["x.title"])
 
+#Muestra todos los actores de una pelicula especifica
 def return_actorsofamovie(tx, name):
     print("Actores de la pelicula " + name + "\n")
     cont = 0
@@ -48,6 +53,7 @@ def return_actorsofamovie(tx, name):
         cont = cont + 1
         print (str(cont) + ". " + record["x.name"])
 
+#Muestra el genero de una pelicula seleccionada
 def return_genreofmovie(tx, name):
     print("Genero de la pelicula " + name + "\n")
     cont = 0
@@ -55,7 +61,8 @@ def return_genreofmovie(tx, name):
             name=name):
         cont = cont + 1
         print (str(cont) + ". " + record["d.genre"])
-
+        
+#Muestra los actores de peliculas de un genero ingresado
 def return_actorsofgenre(tx, name):
     print("Genero de la pelicula " + name + "\n")
     cont = 0
@@ -64,6 +71,7 @@ def return_actorsofgenre(tx, name):
         cont = cont + 1
         print (str(cont) + ". " + record["x.name"])
 
+#Muestra los generos de peliculas en los que un actor especifico ha participado
 def return_genreofanactor(tx, name):
     print("Genero de la pelicula " + name + "\n")
     cont = 0
